@@ -49,7 +49,7 @@ Download Swin Transformer V2 weights from: [https://github.com/microsoft/Swin-Tr
 
 ## Train
 
-Update data_root and frontend_ckpt_path in 
+Update data_root and frontend_ckpt_path in ['main/conf/train.yaml']
 
 ```bash
 python train.py data.root="./avsec4" data.num_channels=1 trainer.log_dir="./logs" data.batch_size=8 trainer.accelerator=gpu trainer.gpus=1
