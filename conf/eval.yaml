@@ -1,0 +1,12 @@
+ckpt_path: ??? # Path to checkpoint for evaluation (null for fresh start)
+save_dir: ??? # Directory where evaluation results will be saved
+model_uid: ??? # Unique identifier for the model 
+cpu: False  # Whether to use CPU for evaluation (True) or GPU (False)
+
+data:
+  root: ??? # Path to the root directory containing train, dev and eval scenes data
+  num_channels: 1 # Number of audio channels (1 for mono, 2 for stereo)
+  audio_norm: False # Whether to normalize audio data
+  rgb: True # Whether to use RGB images (True) or grayscale (False)
+  dev_set: True  # Whether to use dev set for evaluation (True) or not (False)
+  eval_set: False # Whether to use eval set for evaluation (True) or not (False)
