@@ -10,36 +10,35 @@ pip install -r requirements.txt
 
 ```bash
 #Expected folder structure
-AVSE_2025/
-├── code/
-│   ├── _pycache_/
-│   ├── conf/
-│       ├── eval.yaml
-│       └── train.yaml
-│   ├── outputs/
-│   ├── dataset.py
-│   ├── model.py
-│   ├── test.py
-│   ├── train.py
-│   └── utils.py
-├── data_preparation/
-│   └── avse4/
-│       ├── .hydra/
-│       ├── clarity/
-│       ├── hydra/
-│       ├── multirun/
-│       ├── build_scenes.log
-│       ├── build_scenes.py
-│       ├── config.yaml
-│       ├── create_speech_masks.py
-│       ├── render_scenes.log
-│       ├── render_scenes.py
-│       └── setup_avsec_data
-├── evaluation/
-│   └── avse4/
-│       ├── mbstoi/
-│       ├── config.yaml
-│       └── objective_evaluation.py
+avsec4_data_root/
+├── train/
+│   └── scenes/
+│       ├── S34526_mix.wav
+│       ├── S34526_mono_mix.wav
+│       ├── S34526_interferer.wav
+│       ├── S34526_interferer_mono.wav
+│       ├── S34526_target.wav
+│       ├── S34526_target_anechoic.wav
+│       ├── S34526_target_mono.wav
+│       ├── S34526_target_mono_anechoic.wav
+│       └── S34526_silent.mp4
+├── dev/
+│   └── scenes/
+│       ├── S37890_mix.wav
+│       ├── S37890_mono_mix.wav
+│       ├── S37890_interferer.wav
+│       ├── S37890_interferer_mono.wav
+│       ├── S37890_target.wav
+│       ├── S37890_target_anechoic.wav
+│       ├── S37890_target_mono.wav
+│       ├── S37890_target_mono_anechoic.wav
+│       └── S37890_silent.mp4
+└── eval/
+    └── scenes/
+        ├── S34526_mix.wav
+        ├── S34526_mono_mix.wav
+        └── S34526_silent.mp4
+
 ```
 
 ## Dataset
@@ -102,7 +101,7 @@ For further queries, contact us at:
 
 [Harshith Ganji](https://github.com/Aach1) - harshithjaiganji@gmail.com
 
-[Yash Modi](https://github.com/YashModi21)
+[Yash Modi](https://github.com/YashModi21) - yashmodi017@gmail.com
 
 [Sanskriti Jain](https://github.com/Sanskriti-hello) - sansjain23.11@gmail.com
 
