@@ -45,6 +45,7 @@ AVSE_2025/
 ## Dataset
 
 Please find the dataset details here: https://github.com/cogmhear/avse_challenge/tree/main/data_preparation/avse4
+
 Download Swin Transformer V2 weights from: https://github.com/microsoft/Swin-Transformer
 
 ## Train
