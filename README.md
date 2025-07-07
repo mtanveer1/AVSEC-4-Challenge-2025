@@ -100,7 +100,7 @@ For further queries, contact us at:
 
 [Deepanshu Gupta](https://github.com/Deepanshu41008) - mc230041008@iiti.ac.in
 
-[Harshith Ganji](https://github.com/Aach1) 
+[Harshith Ganji](https://github.com/Aach1) - harshithjaiganji@gmail.com
 
 [Yash Modi](https://github.com/YashModi21)
 
