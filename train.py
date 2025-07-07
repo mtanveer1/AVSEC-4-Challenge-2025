@@ -9,7 +9,7 @@ from omegaconf import DictConfig
 import hydra
 from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint
-from model import AUREXA_SE_AVSE, AVSE4LightningModule
+from model import AUREXA_SE, AVSE4LightningModule
 from dataset import AVSE4DataModule
 import os
 os.environ["HYDRA_FULL_ERROR"] = "1"
@@ -18,6 +18,9 @@ log = logging.getLogger(__name__)
 
 @hydra.main(config_path="conf", config_name="train", version_base="1.2")
 def main(cfg: DictConfig):
+    """
+    Main training function
+    """
     checkpoint_callback = ModelCheckpoint(
         monitor="train_loss",
         filename="model-{epoch:02d}-{val_loss:.3f}",
@@ -31,7 +34,7 @@ def main(cfg: DictConfig):
                                  audio_norm=cfg.data.audio_norm, rgb=cfg.data.rgb,
                                  num_channels=cfg.data.num_channels)
     
-    model = AUREXA_SE_AVSE(
+    model = AUREXA_SE(
         audio_encoder_dim=256,
         video_encoder_dim=512,
         cross_attn_heads=8,
