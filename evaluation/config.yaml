@@ -1,0 +1,23 @@
+root: /disk/data1/aaldana/avsec4/avsec4_data/ #/tmp/avse1_data/ # EDIT_THIS - this should match the path defined in data_preparation/avse4/config.yaml
+dataset: dev
+target: ${root}/${dataset}/scenes # path containing target anechoic files
+target_suffix: '_target_mono_anechoic' # format of target files: SXXXXX_target_mono.wav
+enhanced: ${root}/${dataset}/scenes # path containing your enhanced files -- EDIT_THIS
+enhanced_suffix: '' # format of enhanced files: SXXXXX.wav -- EDIT_THIS
+scenes_names: ${root}/metadata/scenes.${dataset}.json
+metrics_results: ${root}/objective_evaluation/ # output directory where results will be written
+
+fs: 16000
+
+objective_metrics:
+  fs: ${fs}
+  pesq_mode: "wb"
+  #Add parameters for other objective metrics
+
+defaults:
+  - override hydra/job_logging: disabled
+
+hydra:
+  output_subdir: Null
+  run:
+    dir: .
