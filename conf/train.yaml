@@ -1,0 +1,28 @@
+data:
+  root: ??? # Path to the root directory containing training data
+  num_channels: 1 # Number of audio channels (1 for mono, 2 for stereo)
+  batch_size: 8 # Number of samples per batch
+  audio_norm: False # Whether to normalize audio data
+  rgb: True # Whether to use RGB images (True) or grayscale (False)
+  sample_rate: 16000 # Audio sample rate (matches dataset and model)
+
+trainer:
+  log_dir: ??? # Directory where training logs and checkpoints will be saved
+  ckpt_path: null # Path to checkpoint for resuming training (null for fresh start)
+  max_epochs: 100 # Maximum number of training epochs
+  lr: 0.0001 # Learning rate for optimizer
+  deterministic: False # Whether to use deterministic algorithms (may affect performance)
+  fast_dev_run: False # If True, runs a single batch for train/val/test for debugging
+  gpus: 1 # Number of GPUs to use for training
+  accelerator: gpu # Hardware accelerator type ('cpu', 'gpu', etc.)
+  strategy: auto # Distributed training strategy ('ddp', 'dp', 'auto', etc.)
+  precision: 32 # Numerical precision for training (16, 32, or 16-mixed)
+  accumulate_grad_batches: 1 # Number of batches to accumulate gradients over
+  gradient_clip_val: null # Maximum gradient norm value (null for no clipping)
+  log_every_n_steps: 50 # How often to log metrics (in steps)
+  num_sanity_val_steps: 0 # Number of validation steps to run before training
+  detect_anomaly: False # Whether to enable PyTorch anomaly detection
+  limit_train_batches: null # Limit training to a percentage of the dataset (null for full dataset)
+  limit_val_batches: null # Limit validation to a percentage of the dataset (null for full dataset)
+  profiler: null # Profiler type to use (null for no profiling)
+  frontend_ckpt_path: ??? # Path to checkpoint for SwinTransformer
