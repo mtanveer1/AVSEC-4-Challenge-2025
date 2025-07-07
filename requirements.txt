@@ -1,0 +1,34 @@
+# Audio-Visual Speech Enhancement (AVSE) Project Requirements
+# Core deep learning and scientific stack
+numpy
+scipy
+pandas
+
+# PyTorch and Lightning
+torch
+pytorch-lightning
+
+# Audio and video processing
+soundfile
+torchaudio
+decord
+opencv-python
+
+# Transformers (for Swin Transformer V2)
+transformers
+
+# Metrics
+torchmetrics[audio]
+
+# Configuration and logging
+omegaconf
+hydra-core
+tqdm
+
+# Logging and visualization
+matplotlib
+# For TensorBoard support (optional, but recommended)
+tensorboard
+
+# If running on GPU, ensure the correct torch version for your CUDA version is installed.
+# See: https://pytorch.org/get-started/locally/ 
