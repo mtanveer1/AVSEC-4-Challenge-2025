@@ -11,7 +11,7 @@ import numpy as np
 
 from dataset import AVSE4DataModule
 from model import AVSE4LightningModule
-from model import AUREXA_SE_AVSE
+from model import AUREXA_SE
 
 SAMPLE_RATE = 16000
 
@@ -27,12 +27,13 @@ def enhance(model, data, device):
         return None, None, estimated_audio
 
 def enhance_full_audio(model, data, device, chunk_size=48000, video_fps=25, frames_per_chunk=75):
+
     noisy_audio = data['noisy_audio'].to(device)
     vis_feat = data['vis_feat'].to(device)
 
     if noisy_audio.dim() == 2 and noisy_audio.shape[0] > 1:
         noisy_audio = noisy_audio.mean(dim=0, keepdim=True)
-    noisy_audio = noisy_audio.squeeze(0)
+    noisy_audio = noisy_audio.squeeze(0)  # [N]
 
     total_len = noisy_audio.shape[0]
     total_frames = vis_feat.shape[0]
@@ -40,6 +41,7 @@ def enhance_full_audio(model, data, device, chunk_size=48000, video_fps=25, fram
 
     samples_per_frame = total_len / total_frames
 
+    # Padding
     for start in range(0, total_len, chunk_size):
         end = min(start + chunk_size, total_len)
         chunk = noisy_audio[start:end]
@@ -67,6 +69,9 @@ def enhance_full_audio(model, data, device, chunk_size=48000, video_fps=25, fram
 
 @hydra.main(config_path="conf", config_name="eval", version_base="1.2")
 def main(cfg: DictConfig):
+    """
+    Main evaluation function
+    """
     model_uid = cfg.get("model_uid", "default_model")
     enhanced_root = join(cfg.save_dir, model_uid)
     makedirs(cfg.save_dir, exist_ok=True)
@@ -85,7 +90,7 @@ def main(cfg: DictConfig):
         raise RuntimeError("Select one of dev set and test set")
     
     try:
-        model = AUREXA_SE_AVSE(
+        model = AUREXA_SE(
             audio_encoder_dim=256,
             video_encoder_dim=512,
             cross_attn_heads=8,
