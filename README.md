@@ -10,7 +10,7 @@ pip install -r requirements.txt
 
 ```bash
 #Expected folder structure
-avsec4_data_root/
+avsec4/
 ├── train/
 │   └── scenes/
 │       ├── S34526_mix.wav
@@ -49,16 +49,17 @@ Download Swin Transformer V2 weights from: [https://github.com/microsoft/Swin-Tr
 
 ## Train
 
+Update data_root and frontend_ckpt_path in 
+
 ```bash
-python train_script.py \
-  --log_dir D:/AVSE_2025/logs \
-  --batch_size 2 \
-  --lr 0.0001 \
-  --gpu 1 \
-  --max_epochs 100
+python train.py data.root="./avsec4" data.num_channels=1 trainer.log_dir="./logs" data.batch_size=8 trainer.accelerator=gpu trainer.gpus=1
+
+more arguments in conf/train.yaml
 ```
 
 ## Test
+
+Update data root, model checkpoint, save_dir
 
 ```bash
 usage: test.py [-h] 
