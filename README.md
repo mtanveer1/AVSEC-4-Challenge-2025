@@ -9,7 +9,7 @@ pip install -r requirements.txt
 ```
 
 ## Folder Structure
-
+```bash
 AVSE_2025/
 ├── code/
 │   ├── _pycache_/
@@ -44,9 +44,11 @@ AVSE_2025/
 │       ├── mbstoi/
 │       ├── config.yaml
 │       └── objective_evaluation.py
+```
 
 ## Configuration
 ### Training: train.yaml
+
 
 ```bash
 data.root: "D:/AVSE_2025/avse_data"
@@ -62,12 +64,13 @@ Download Swin Transformer V2 weights from: https://github.com/microsoft/Swin-Tra
 
 ### Evaluation: eval.yaml
 
-'''bash
+```bash
 ckpt_path: "D:/AVSE_2025/avse_challenge2/code/logs2/lightning_logs/version_28/checkpoints/model-epoch=18-val_loss=0.006.ckpt"
 save_dir: "D:/AVSE_2025/sample_data/eval/scene_penult"
 model_uid: "mono_"
 eval_set: True
 cpu: False
+```
 
 ## Usage
 ### Train
