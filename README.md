@@ -43,9 +43,9 @@ avsec4_data_root/
 
 ## Dataset
 
-Please find the dataset details here: https://github.com/cogmhear/avse_challenge/tree/main/data_preparation/avse4
+Please find the dataset details here: [https://github.com/cogmhear/avse_challenge/tree/main/data_preparation/avse4](https://github.com/cogmhear/avse_challenge)
 
-Download Swin Transformer V2 weights from: https://github.com/microsoft/Swin-Transformer
+Download Swin Transformer V2 weights from: [https://github.com/microsoft/Swin-Transformer](https://github.com/SwinTransformer/Video-Swin-Transformer)
 
 ## Train
 
