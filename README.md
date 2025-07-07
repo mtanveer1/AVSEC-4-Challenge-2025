@@ -89,14 +89,10 @@ python test.py \
   --cpu False
 ```
 
-## Evaluation: eval.yaml
+## Evaluation
 
-```bash
-ckpt_path: "D:/AVSE_2025/avse_challenge2/code/logs2/lightning_logs/version_28/checkpoints/model-epoch=18-val_loss=0.006.ckpt"
-save_dir: "D:/AVSE_2025/sample_data/eval/scene_penult"
-model_uid: "mono_"
-eval_set: True
-cpu: False
+```bash  
+python objective_evaluation.py
 ```
 
 ## Contact Us
