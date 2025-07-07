@@ -13,9 +13,8 @@ EPS = np.finfo(float).eps
 IMAGENET_MEAN = [0.485, 0.456, 0.406]
 IMAGENET_STD = [0.229, 0.224, 0.225]
 
-# ============================================================================
+
 # VISUAL PROCESSING MODULES
-# ============================================================================
 
 class SwinTransformerV2(nn.Module):
     def __init__(self, img_size=112, patch_size=24, in_chans=3, embed_dim=128, depths=[2, 2, 6, 2],
@@ -39,21 +38,20 @@ class SwinTransformerV2(nn.Module):
             self.model.eval()
 
     def forward(self, x):
+
         if self.training:
             self.model.train()
         else:
             self.model.eval()
         B, C, H, W = x.shape
         outputs = self.model(x)
-        pooled_output = outputs.last_hidden_state.mean(dim=1)  # [B, hidden_size]
-        return self.projection(pooled_output)  # [B, 512]
+        pooled_output = outputs.last_hidden_state.mean(dim=1)
+        return self.projection(pooled_output)
 
-# ============================================================================
+
 # AUDIO ENCODER MODULES
-# ============================================================================
 
 class UNetAudioEncoder(nn.Module):
-
     def __init__(self, in_channels=1, base_channels=32, num_layers=4, feature_dim=256):
         super().__init__()
         self.downs = nn.ModuleList()
@@ -84,7 +82,14 @@ class UNetAudioEncoder(nn.Module):
             return x, skips_out, self.skip_channels
         return x
 
+
+# CROSS-MODAL FUSION MODULES
+
 class BidirectionalCrossAttention(nn.Module):
+    """
+    Bidirectional cross-attention mechanism for audio-visual fusion.
+    Enables mutual attention between audio and video features to capture cross-modal dependencies.
+    """
     def __init__(self, dim, heads, layers):
         super().__init__()
         self.layers = layers
@@ -93,6 +98,9 @@ class BidirectionalCrossAttention(nn.Module):
         self.norms = nn.ModuleList([nn.LayerNorm(dim) for _ in range(layers * 2)])
 
     def forward(self, audio, video):
+        """
+        Bidirectional cross-attention between audio and video to return fused features.
+        """
         if audio.size(1) != video.size(1):
             video = F.interpolate(video.transpose(1, 2), size=audio.size(1), mode='linear', align_corners=False).transpose(1, 2)
         for i in range(self.layers):
@@ -102,9 +110,8 @@ class BidirectionalCrossAttention(nn.Module):
             video = video + self.norms[i * 2 + 1](a2v)
         return audio, video
 
-# ============================================================================
+
 # TEMPORAL MODELING MODULES
-# ============================================================================
 
 class SqueezeformerBlock(nn.Module):
     def __init__(self, dim, heads, downsample=False):
@@ -138,39 +145,32 @@ class Squeezeformer(nn.Module):
         ])
 
     def forward(self, x):
+
         for block in self.blocks:
             x = block(x)
         return x
 
-# ============================================================================
+
 # DECODER MODULES
-# ============================================================================
 
 class ImprovedAudioDecoder(nn.Module):
-
     def __init__(self, input_dim=256, output_len=48000, skip_channels=None, hidden_dims=[128, 64, 32, 16]):
         super().__init__()
         self.output_len = output_len
+        self.upsample_factors = [2, 2, 2, 2, 2, 2, 2]
 
-        # Calculate proper upsampling factors to reach target length
-        # Assuming input temporal length ~375, need ~128x upsampling total
-        self.upsample_factors = [2, 2, 2, 2, 2, 2, 2]  
-
-        # Progressive channel reduction layers
         dims = [input_dim] + hidden_dims + [1]
         self.layers = nn.ModuleList()
 
         for i in range(len(dims) - 1):
-            # Use nearest neighbor upsampling + conv to avoid checkerboard artifacts
             layer = nn.Sequential(
                 nn.Upsample(scale_factor=self.upsample_factors[i], mode='nearest'),
                 nn.Conv1d(dims[i], dims[i+1], kernel_size=5, padding=2),
                 nn.BatchNorm1d(dims[i+1]) if i < len(dims) - 2 else nn.Identity(),
-                nn.LeakyReLU(0.2) if i < len(dims) - 2 else nn.Tanh()  # Tanh for final output
+                nn.LeakyReLU(0.2) if i < len(dims) - 2 else nn.Tanh()
             )
             self.layers.append(layer)
 
-        # Skip connection projections (for U-Net style connections)
         if skip_channels is None:
             skip_channels = [input_dim] * (len(dims) - 2)
         self.skip_projections = nn.ModuleList([
@@ -178,14 +178,13 @@ class ImprovedAudioDecoder(nn.Module):
         ])
 
     def forward(self, x, skip_connections=None):
-        # Transpose for conv1d: [B, T, C] -> [B, C, T]  
         x = x.transpose(1, 2)
 
         for i, layer in enumerate(self.layers):
             x = layer(x)
 
             if skip_connections is not None and i < len(skip_connections):
-                skip = skip_connections[i].transpose(1, 2)  # [B, T, C] -> [B, C, T]
+                skip = skip_connections[i].transpose(1, 2)
                 skip = F.interpolate(skip, size=x.shape[-1], mode='nearest')
                 if i < len(self.skip_projections):
                     skip = self.skip_projections[i](skip)
@@ -198,11 +197,12 @@ class ImprovedAudioDecoder(nn.Module):
 
         return x
 
-# ============================================================================
-# UTILITY FUNCTIONS
-# ============================================================================
 
+# UTILITY FUNCTIONS
 def seed_everything(seed: int):
+    """
+    Set random seeds for reproducibility across all random number generators.
+    """
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
