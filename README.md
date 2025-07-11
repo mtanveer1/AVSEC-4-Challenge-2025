@@ -72,8 +72,6 @@ usage: test.py [-h]
 
 # Model evaluation on the dev set
 python test.py \
-  --ckpt_path D:/AVSE_2025/checkpoints/model-epoch=18-val_loss=0.006.ckpt \
-  --save_dir D:/AVSE_2025/sample_data/eval/scene_dev \
   --model_uid mono_ \
   --dev_set True \
   --eval_set False \
@@ -81,8 +79,6 @@ python test.py \
 
 # Model evaluation on the eval set
 python test.py \
-  --ckpt_path D:/AVSE_2025/checkpoints/model-epoch=18-val_loss=0.006.ckpt \
-  --save_dir D:/AVSE_2025/sample_data/eval/scene_eval \
   --model_uid mono_ \
   --dev_set False \
   --eval_set True \
