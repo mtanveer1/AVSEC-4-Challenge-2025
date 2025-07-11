@@ -87,6 +87,8 @@ python test.py \
 
 ## Evaluation
 
+Update data_root:  [main/conf/eval.yaml](https://github.com/mtanveer1/AVSEC-4-Challenge-2025/blob/main/conf/eval.yaml)
+
 ```bash  
 python objective_evaluation.py
 ```
