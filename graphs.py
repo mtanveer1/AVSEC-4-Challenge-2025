@@ -14,6 +14,7 @@ import librosa.display
 from scipy import signal
 import soundfile as sf
 import os
+import pandas as pd
 from typing import Tuple, Optional
 
 class AudioVisualizer:
