@@ -116,6 +116,12 @@ Update data_root:  [main/evaluation/config.yaml](https://github.com/mtanveer1/AV
 ```bash  
 python objective_evaluation.py
 ```
+## Pretrained Model Checkpoints
+
+The pretrained checkpoints used in the paper can be downloaded from:
+
+**Google Drive:**  
+[Click Here](https://drive.google.com/file/d/15QNLvn_v4yLzOJAxh9FNqKHk5rOKq27g/view?usp=sharing)
 
 ## Contact Us
 For further queries, contact us at:
